@@ -7,10 +7,8 @@ func SortString(s string) string {
 		b[c-'a']++
 	}
 
-	size := len(b)
 	rst := make([]byte, len(s))
-	k := 0
-	for k < len(s) {
+	for k, size := 0, len(b); k < len(s); {
 		for i := 0; i < size; i++ {
 			if b[i] > 0 {
 				rst[k] = byte(i) + 'a'
