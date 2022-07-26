@@ -13,9 +13,9 @@ func TestProducerConsumer(t *testing.T) {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		for i := 1; i <= 28; i++ {
+		for i := 1; i < 28; i+=2 {
 			<-ch1
-			fmt.Printf("%d", i)
+			fmt.Printf("%d%d", i, i+1)
 			ch2 <- struct{}{}
 		}
 	}()
@@ -23,13 +23,11 @@ func TestProducerConsumer(t *testing.T) {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		for i := 'A'; i <= 'Z'; i++ {
+		for i := 'A'; i < 'Z'; i+=2 {
 			<-ch2
-			fmt.Printf("%c", i)
+			fmt.Printf("%c%c", i,i+1)
 			ch1 <- struct{}{}
 		}
-		<-ch2
-		ch1 <- struct{}{}
 		<-ch2
 	}()
 	ch1 <- struct{}{}
